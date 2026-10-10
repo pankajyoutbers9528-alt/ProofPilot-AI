@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProofPilot AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f1f5f9;font-family:Arial,sans-serif}
+header{padding:22px;background:#151d33;border-bottom:1px solid #334155}
+h1{margin:0;color:#60a5fa}
+header p{color:#cbd5e1}
+main{max-width:850px;margin:25px auto;padding:16px}
+.card{background:#151d33;padding:20px;border-radius:16px;margin-bottom:18px}
+label{display:block;margin:14px 0 8px}
+textarea{width:100%;min-height:190px;background:#080d19;color:#a7f3d0;padding:14px;border:1px solid #475569;border-radius:10px;font:15px monospace}
+input{width:100%;padding:12px;background:#080d19;color:white;border:1px solid #475569;border-radius:8px}
+button{margin-top:14px;padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:bold}
+#output{white-space:pre-wrap;overflow-wrap:anywhere;background:#080d19;padding:14px;border-radius:8px;min-height:50px}
+.note{color:#cbd5e1;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+<h1>ProofPilot AI</h1>
+<p>Code Tester • Run JavaScript • Check Output</p>
+</header>
+<main>
+<div class="card">
+<h2>🧪 Test your JavaScript</h2>
+<label for="code">अपना JavaScript कोड लिखें या पेस्ट करें:</label>
+<textarea id="code">console.log("Hello ProofPilot AI!");
+console.log(2 + 3);</textarea>
+<label for="expected">Expected Output (वैकल्पिक):</label>
+<input id="expected" placeholder="उदाहरण: Hello ProofPilot AI!&#10;5">
+<button onclick="runCode()">▶ Run & Test</button>
+<button onclick="clearOutput()" style="background:#475569">Clear Output</button>
+</div>
+<div class="card">
+<h2>📋 Test Result</h2>
+<p id="status">कोड चलाने के लिए Run & Test दबाएँ।</p>
+<div id="output">Output यहाँ दिखेगा...</div>
+</div>
+<p class="note">ध्यान दें: यह शुरुआती JavaScript tester है, पूर्ण AI सिस्टम नहीं। अनजान या अविश्वसनीय कोड न चलाएँ।</p>
+</main>
+<script>
+function runCode(){
+ const code=document.getElementById("code").value;
+ const expected=document.getElementById("expected").value.trim();
+ const out=document.getElementById("output");
+ const status=document.getElementById("status");
+ let logs=[];
+ const safeConsole={log:(...a)=>logs.push(a.map(String).join(" "))};
+ try{
+  const fn=new Function("console",'"use strict";\n'+code);
+  fn(safeConsole);
+  const result=logs.join("\n");
+  out.textContent=result||"(कोई output नहीं)";
+  if(expected){
+   const pass=result.trim()===expected;
+   status.textContent=pass?"✅ PASS — Output मैच हुआ":"❌ FAIL — Output मैच नहीं हुआ";
+  }else{
+   status.textContent="✅ कोड चला। Expected Output डालकर तुलना कर सकते हैं।";
+  }
+ }catch(e){
+  out.textContent=e.name+": "+e.message;
+  status.textContent="❌ ERROR — कोड जाँचें";
+ }
+}
+function clearOutput(){
+ document.getElementById("output").textContent="Output यहाँ दिखेगा...";
+ document.getElementById("status").textContent="कोड चलाने के लिए Run & Test दबाएँ।";
+}
+</script>
+</body>
+</html>
