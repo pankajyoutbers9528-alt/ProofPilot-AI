@@ -1,76 +1,334 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ProofPilot AI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10172b">
+<title>ProofPilot AI - Student Hub</title>
 <style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151d33;--blue:#3979f6;--text:#f1f5f9;--muted:#aab6ce}
 *{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#f1f5f9;font-family:Arial,sans-serif}
-header{padding:22px;background:#151d33;border-bottom:1px solid #334155}
-h1{margin:0;color:#60a5fa}
-header p{color:#cbd5e1}
-main{max-width:850px;margin:25px auto;padding:16px}
-.card{background:#151d33;padding:20px;border-radius:16px;margin-bottom:18px}
-label{display:block;margin:14px 0 8px}
-textarea{width:100%;min-height:190px;background:#080d19;color:#a7f3d0;padding:14px;border:1px solid #475569;border-radius:10px;font:15px monospace}
-input{width:100%;padding:12px;background:#080d19;color:white;border:1px solid #475569;border-radius:8px}
-button{margin-top:14px;padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:bold}
-#output{white-space:pre-wrap;overflow-wrap:anywhere;background:#080d19;padding:14px;border-radius:8px;min-height:50px}
-.note{color:#cbd5e1;font-size:14px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
+header{padding:20px;background:var(--panel);position:sticky;top:0;z-index:2;border-bottom:1px solid #303c55}
+h1{margin:0;color:#7eb5ff;font-size:25px}
+header p{margin:5px 0 0;color:var(--muted);font-size:13px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#11182a}
+nav button{white-space:nowrap;margin:0}
+main{max-width:900px;margin:auto;padding:15px}
+section{display:none}
+section.active{display:block}
+.card{background:var(--panel);padding:17px;border:1px solid #27334c;border-radius:15px;margin-bottom:15px}
+h2{font-size:20px;margin:0 0 13px}
+h3{font-size:16px}
+p,.muted{color:var(--muted)}
+button,.app{display:inline-block;border:0;border-radius:9px;background:var(--blue);color:white;padding:11px 14px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;margin:4px 3px 4px 0}
+button.secondary{background:#35425b}
+button.danger{background:#a83c4b}
+input,textarea,select{display:block;width:100%;padding:12px;margin:7px 0 12px;border:1px solid #3c4a66;border-radius:9px;background:#080d19;color:white;font:inherit}
+textarea{min-height:125px;resize:vertical}
+label{display:block;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.tile{display:block;text-decoration:none;color:white;background:#202d49;padding:16px;border-radius:12px;border:1px solid #354665}
+.tile b{display:block;margin-bottom:6px}
+pre,.output{white-space:pre-wrap;overflow-wrap:anywhere;background:#080d19;padding:13px;border-radius:9px;min-height:45px}
+.small{font-size:12px;color:var(--muted)}
+.item{padding:10px 0;border-bottom:1px solid #354057;overflow-wrap:anywhere}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 </style>
 </head>
 <body>
 <header>
 <h1>ProofPilot AI</h1>
-<p>Code Tester • Run JavaScript • Check Output</p>
+<p>Student Hub • Study • Tools • Code Testing</p>
 </header>
+
+<nav>
+<button onclick="showTab('home')">🏠 Home</button>
+<button onclick="showTab('apps')">🌐 Apps</button>
+<button onclick="showTab('study')">📚 Study</button>
+<button onclick="showTab('notes')">📝 Notes</button>
+<button onclick="showTab('tasks')">✅ Tasks</button>
+<button onclick="showTab('quiz')">🧠 Quiz</button>
+<button onclick="showTab('tools')">🔧 Tools</button>
+<button onclick="showTab('code')">💻 Code Lab</button>
+</nav>
+
 <main>
+<section id="home" class="active">
 <div class="card">
-<h2>🧪 Test your JavaScript</h2>
-<label for="code">अपना JavaScript कोड लिखें या पेस्ट करें:</label>
-<textarea id="code">console.log("Hello ProofPilot AI!");
-console.log(2 + 3);</textarea>
-<label for="expected">Expected Output (वैकल्पिक):</label>
-<input id="expected" placeholder="उदाहरण: Hello ProofPilot AI!&#10;5">
+<h2>Welcome to ProofPilot AI 🚀</h2>
+<p>आपकी पढ़ाई और डिजिटल टूल्स एक ही जगह।</p>
+<div class="grid">
+<a class="tile" href="#" onclick="showTab('study');return false"><b>📚 Study Center</b><span class="small">पढ़ाई के संसाधन</span></a>
+<a class="tile" href="#" onclick="showTab('notes');return false"><b>📝 My Notes</b><span class="small">नोट्स सेव करें</span></a>
+<a class="tile" href="#" onclick="showTab('quiz');return false"><b>🧠 MCQ Quiz</b><span class="small">ज्ञान जाँचें</span></a>
+<a class="tile" href="#" onclick="showTab('code');return false"><b>💻 Code Tester</b><span class="small">JavaScript टेस्ट करें</span></a>
+</div>
+</div>
+<div class="card">
+<h2>📅 आज की तारीख</h2>
+<p id="today"></p>
+<h3>जल्दी से खोजें</h3>
+<form onsubmit="searchWeb(event)">
+<input id="search" placeholder="पढ़ाई का विषय या सवाल लिखें" required>
+<button>Google पर खोजें</button>
+</form>
+</div>
+</section>
+
+<section id="apps">
+<div class="card">
+<h2>🌐 Social Apps</h2>
+<p>नीचे बटन दबाकर आधिकारिक साइट या सेवा खोलें। लॉगिन संबंधित सेवा पर होगा।</p>
+<div class="grid">
+<a class="tile" href="https://www.youtube.com/" target="_blank" rel="noopener"><b>▶ YouTube</b><span class="small">वीडियो और पढ़ाई</span></a>
+<a class="tile" href="https://www.facebook.com/" target="_blank" rel="noopener"><b>f Facebook</b><span class="small">सोशल नेटवर्क</span></a>
+<a class="tile" href="https://www.instagram.com/" target="_blank" rel="noopener"><b>◎ Instagram</b><span class="small">फोटो और वीडियो</span></a>
+<a class="tile" href="https://web.telegram.org/" target="_blank" rel="noopener"><b>✈ Telegram</b><span class="small">मैसेजिंग</span></a>
+<a class="tile" href="https://web.whatsapp.com/" target="_blank" rel="noopener"><b>☏ WhatsApp</b><span class="small">मैसेजिंग</span></a>
+<a class="tile" href="https://www.google.com/" target="_blank" rel="noopener"><b>G Google</b><span class="small">वेब सर्च</span></a>
+</div>
+<p class="small">ये आधिकारिक सेवाओं के लिंक हैं; सभी सेवाएँ इस वेबसाइट के अंदर नहीं चलतीं।</p>
+</div>
+</section>
+
+<section id="study">
+<div class="card">
+<h2>📚 Student Study Center</h2>
+<p>अपने विषय की पढ़ाई के लिए मुफ़्त खोजें:</p>
+<button onclick="openSearch('BSc first year study notes')">BSc Notes</button>
+<button onclick="openSearch('Python programming beginner tutorial Hindi')">Python सीखें</button>
+<button onclick="openSearch('physics first year lectures Hindi')">Physics</button>
+<button onclick="openSearch('computer science MCQ practice')">Computer MCQ</button>
+<button onclick="openSearch('NCERT textbooks official PDF')">NCERT Books</button>
+<button onclick="openSearch('SWAYAM free online courses')">SWAYAM Courses</button>
+<h3>Study Timer</h3>
+<p>25 मिनट पढ़ाई का टाइमर शुरू करें।</p>
+<h2 id="timer">25:00</h2>
+<button onclick="startTimer()">▶ Start</button>
+<button class="secondary" onclick="resetTimer()">Reset</button>
+</div>
+</section>
+
+<section id="notes">
+<div class="card">
+<h2>📝 My Notes</h2>
+<label>नोट का शीर्षक<input id="noteTitle" placeholder="जैसे: Physics Chapter 1"></label>
+<label>नोट लिखें<textarea id="noteText" placeholder="अपने नोट्स यहाँ लिखें..."></textarea></label>
+<button onclick="saveNote()">Save Note</button>
+<div id="noteList"></div>
+</div>
+</section>
+
+<section id="tasks">
+<div class="card">
+<h2>✅ Study Tasks</h2>
+<label>काम<input id="taskText" placeholder="जैसे: Python के 5 सवाल हल करना"></label>
+<label>तारीख<input type="date" id="taskDate"></label>
+<button onclick="addTask()">Add Task</button>
+<div id="taskList"></div>
+</div>
+<div class="card">
+<h2>🗓️ My Timetable</h2>
+<label>समय और विषय<textarea id="timetable" placeholder="9 AM - Physics&#10;11 AM - Computer Science"></textarea></label>
+<button onclick="saveTimetable()">Save Timetable</button>
+<p id="timeStatus"></p>
+</div>
+</section>
+
+<section id="quiz">
+<div class="card">
+<h2>🧠 Beginner Computer Quiz</h2>
+<p id="question"></p>
+<div id="options"></div>
+<p id="quizResult">सही उत्तर चुनें।</p>
+<button onclick="nextQuestion()">Next Question</button>
+<button class="secondary" onclick="restartQuiz()">Restart Quiz</button>
+</div>
+</section>
+
+<section id="tools">
+<div class="card">
+<h2>🔢 Calculator</h2>
+<p>केवल सामान्य गणितीय गणना के लिए।</p>
+<input id="calcInput" inputmode="decimal" placeholder="उदाहरण: (25+5)*2">
+<button onclick="calculate()">Calculate</button>
+<div id="calcOutput" class="output">उत्तर यहाँ आएगा।</div>
+</div>
+<div class="card">
+<h2>🔎 Study Search</h2>
+<form onsubmit="searchWeb(event)">
+<input id="search2" placeholder="विषय या प्रश्न लिखें" required>
+<button>Google पर खोजें</button>
+</form>
+</div>
+</section>
+
+<section id="code">
+<div class="card">
+<h2>💻 JavaScript Code Tester</h2>
+<label>JavaScript कोड<textarea id="codeInput">console.log("Hello ProofPilot AI!");
+console.log(2 + 3);</textarea></label>
+<label>Expected Output (वैकल्पिक)<input id="expected" placeholder="Hello ProofPilot AI! और 5, दो अलग लाइनों में"></label>
 <button onclick="runCode()">▶ Run & Test</button>
-<button onclick="clearOutput()" style="background:#475569">Clear Output</button>
+<button class="secondary" onclick="clearCode()">Clear Output</button>
+<h3 id="codeStatus">कोड चलाने के लिए Run & Test दबाएँ।</h3>
+<pre id="codeOutput">Output यहाँ दिखेगा...</pre>
+<p class="small">सावधानी: यह शुरुआती JavaScript tester है। अनजान कोड न चलाएँ। यह पूर्ण सुरक्षित sandbox नहीं है।</p>
 </div>
-<div class="card">
-<h2>📋 Test Result</h2>
-<p id="status">कोड चलाने के लिए Run & Test दबाएँ।</p>
-<div id="output">Output यहाँ दिखेगा...</div>
-</div>
-<p class="note">ध्यान दें: यह शुरुआती JavaScript tester है, पूर्ण AI सिस्टम नहीं। अनजान या अविश्वसनीय कोड न चलाएँ।</p>
+</section>
 </main>
+
+<footer>ProofPilot AI • Student Tools • यह मुफ़्त शुरुआती वेब प्रोजेक्ट है</footer>
+
 <script>
-function runCode(){
- const code=document.getElementById("code").value;
- const expected=document.getElementById("expected").value.trim();
- const out=document.getElementById("output");
- const status=document.getElementById("status");
- let logs=[];
- const safeConsole={log:(...a)=>logs.push(a.map(String).join(" "))};
- try{
-  const fn=new Function("console",'"use strict";\n'+code);
-  fn(safeConsole);
-  const result=logs.join("\n");
-  out.textContent=result||"(कोई output नहीं)";
-  if(expected){
-   const pass=result.trim()===expected;
-   status.textContent=pass?"✅ PASS — Output मैच हुआ":"❌ FAIL — Output मैच नहीं हुआ";
-  }else{
-   status.textContent="✅ कोड चला। Expected Output डालकर तुलना कर सकते हैं।";
-  }
- }catch(e){
-  out.textContent=e.name+": "+e.message;
-  status.textContent="❌ ERROR — कोड जाँचें";
+function showTab(id){
+ document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+}
+document.getElementById('today').textContent=new Date().toLocaleDateString('hi-IN',{dateStyle:'full'});
+
+function openSearch(q){window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener')}
+function searchWeb(e){
+ e.preventDefault();
+ const field=e.target.querySelector('input');
+ openSearch(field.value);
+}
+function readStore(key,fallback){
+ try{return JSON.parse(localStorage.getItem(key))??fallback}catch(e){return fallback}
+}
+function writeStore(key,value){
+ try{localStorage.setItem(key,JSON.stringify(value));return true}
+ catch(e){alert('सेव नहीं हो पाया। ब्राउज़र की storage उपलब्धता जाँचें।');return false}
+}
+
+function saveNote(){
+ const title=document.getElementById('noteTitle').value.trim();
+ const body=document.getElementById('noteText').value.trim();
+ if(!title||!body){alert('शीर्षक और नोट दोनों लिखें।');return}
+ const notes=readStore('ppNotes',[]);
+ notes.unshift({id:Date.now(),title,body});
+ if(writeStore('ppNotes',notes)){
+ document.getElementById('noteTitle').value='';
+ document.getElementById('noteText').value='';
+ renderNotes();
  }
 }
-function clearOutput(){
- document.getElementById("output").textContent="Output यहाँ दिखेगा...";
- document.getElementById("status").textContent="कोड चलाने के लिए Run & Test दबाएँ।";
+function renderNotes(){
+ const box=document.getElementById('noteList');
+ box.replaceChildren();
+ readStore('ppNotes',[]).forEach(n=>{
+ const item=document.createElement('div');item.className='item';
+ const h=document.createElement('b');h.textContent=n.title;
+ const p=document.createElement('p');p.textContent=n.body;
+ const b=document.createElement('button');b.className='danger';b.textContent='Delete';
+ b.onclick=()=>{writeStore('ppNotes',readStore('ppNotes',[]).filter(x=>x.id!==n.id));renderNotes()};
+ item.append(h,p,b);box.append(item);
+ });
+}
+renderNotes();
+
+function addTask(){
+ const text=document.getElementById('taskText').value.trim();
+ const date=document.getElementById('taskDate').value;
+ if(!text){alert('पहले काम लिखें।');return}
+ const tasks=readStore('ppTasks',[]);
+ tasks.push({id:Date.now(),text,date,done:false});
+ if(writeStore('ppTasks',tasks)){document.getElementById('taskText').value='';renderTasks()}
+}
+function renderTasks(){
+ const box=document.getElementById('taskList');box.replaceChildren();
+ readStore('ppTasks',[]).forEach(t=>{
+ const row=document.createElement('div');row.className='item';
+ const label=document.createElement('label');label.style.display='flex';label.style.gap='8px';label.style.alignItems='center';
+ const check=document.createElement('input');check.type='checkbox';check.style.width='auto';check.style.margin='0';check.checked=t.done;
+ check.onchange=()=>{const a=readStore('ppTasks',[]);const x=a.find(y=>y.id===t.id);if(x)x.done=check.checked;writeStore('ppTasks',a);renderTasks()};
+ const span=document.createElement('span');span.textContent=t.text+(t.date?' — '+t.date:'');if(t.done)span.style.textDecoration='line-through';
+ const del=document.createElement('button');del.className='danger';del.textContent='Delete';
+ del.onclick=()=>{writeStore('ppTasks',readStore('ppTasks',[]).filter(x=>x.id!==t.id));renderTasks()};
+ label.append(check,span);row.append(label,del);box.append(row);
+ });
+}
+renderTasks();
+document.getElementById('timetable').value=localStorage.getItem('ppTimetable')||'';
+function saveTimetable(){
+ try{localStorage.setItem('ppTimetable',document.getElementById('timetable').value);document.getElementById('timeStatus').textContent='✅ Timetable सेव हो गया।'}
+ catch(e){document.getElementById('timeStatus').textContent='सेव नहीं हो पाया।'}
+}
+
+let timerSeconds=1500,timerHandle=null;
+function updateTimer(){document.getElementById('timer').textContent=String(Math.floor(timerSeconds/60)).padStart(2,'0')+':'+String(timerSeconds%60).padStart(2,'0')}
+function startTimer(){
+ if(timerHandle)return;
+ timerHandle=setInterval(()=>{
+ timerSeconds--;updateTimer();
+ if(timerSeconds<=0){clearInterval(timerHandle);timerHandle=null;alert('पढ़ाई का समय पूरा हुआ! थोड़ा ब्रेक लें।')}
+ },1000);
+}
+function resetTimer(){if(timerHandle)clearInterval(timerHandle);timerHandle=null;timerSeconds=1500;updateTimer()}
+updateTimer();
+
+const questions=[
+{q:'Python में स्क्रीन पर लिखने के लिए कौन-सा function है?',o:['print()','show()','writeScreen()','echoText()'],a:0},
+{q:'HTML का उपयोग मुख्य रूप से किस लिए होता है?',o:['वेब पेज की संरचना','सिर्फ गणना','वीडियो एडिटिंग','ऑपरेटिंग सिस्टम'],a:0},
+{q:'2 + 3 का उत्तर क्या है?',o:['6','5','23','1'],a:1},
+{q:'कंप्यूटर का CPU क्या है?',o:['इनपुट डिवाइस','प्रोसेसिंग यूनिट','स्क्रीन','प्रिंटर'],a:1},
+{q:'JavaScript मुख्य रूप से कहाँ इस्तेमाल होती है?',o:['वेब पेज में इंटरैक्टिव फीचर','केवल टाइपिंग','केवल प्रिंटिंग','केवल बैटरी चार्जिंग'],a:0}
+];
+let qi=0,score=0,answered=false;
+function renderQuestion(){
+ answered=false;
+ const q=questions[qi];document.getElementById('question').textContent=(qi+1)+'. '+q.q;
+ document.getElementById('quizResult').textContent='स्कोर: '+score+' / '+questions.length;
+ const box=document.getElementById('options');box.replaceChildren();
+ q.o.forEach((option,i)=>{
+ const b=document.createElement('button');b.className='secondary';b.style.display='block';b.style.width='100%';b.style.textAlign='left';b.textContent=option;
+ b.onclick=()=>{
+ if(answered)return;answered=true;
+ if(i===q.a){score++;document.getElementById('quizResult').textContent='✅ सही जवाब! स्कोर: '+score}
+ else document.getElementById('quizResult').textContent='❌ सही जवाब: '+q.o[q.a]+' | स्कोर: '+score;
+ };
+ box.append(b);
+ });
+}
+function nextQuestion(){qi=(qi+1)%questions.length;if(qi===0)score=0;renderQuestion()}
+function restartQuiz(){qi=0;score=0;renderQuestion()}
+renderQuestion();
+
+function calculate(){
+ const s=document.getElementById('calcInput').value.trim();
+ const out=document.getElementById('calcOutput');
+ if(!s){out.textContent='पहले गणना लिखें।';return}
+ if(!/^[0-9+\-*/().%\s]+$/.test(s)){out.textContent='केवल संख्याएँ और + - * / % ( ) का इस्तेमाल करें।';return}
+ try{
+ const result=Function('"use strict";return ('+s+')')();
+ out.textContent=Number.isFinite(result)?String(result):'मान्य संख्या नहीं है।';
+ }catch(e){out.textContent='गणना सही नहीं है।'}
+}
+function runCode(){
+ const code=document.getElementById('codeInput').value;
+ const expected=document.getElementById('expected').value.trim();
+ const out=document.getElementById('codeOutput');
+ const status=document.getElementById('codeStatus');
+ const logs=[];
+ const fakeConsole={log:(...args)=>logs.push(args.map(v=>typeof v==='object'?JSON.stringify(v):String(v)).join(' '))};
+ try{
+ new Function('console','"use strict";\n'+code)(fakeConsole);
+ const result=logs.join('\n');
+ out.textContent=result||'(कोई output नहीं)';
+ if(expected){
+ const pass=result.trim()===expected;
+ status.textContent=pass?'✅ PASS — Output मैच हुआ':'❌ FAIL — Output मैच नहीं हुआ';
+ }else status.textContent='✅ कोड चला।';
+ }catch(e){out.textContent=e.name+': '+e.message;status.textContent='❌ Code Error'}
+}
+function clearCode(){
+ document.getElementById('codeOutput').textContent='Output यहाँ दिखेगा...';
+ document.getElementById('codeStatus').textContent='कोड चलाने के लिए Run & Test दबाएँ।';
 }
 </script>
 </body>
-  </html>
+ </html>
+ 
